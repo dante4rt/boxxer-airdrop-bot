@@ -1,6 +1,6 @@
 node_modules
 
-privateKeys.json
+tokens.json
 package-lock.json
 
 reserved.js

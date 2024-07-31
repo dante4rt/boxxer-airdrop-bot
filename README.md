@@ -34,7 +34,7 @@ This is a Node.js bot for automating the Boxxer Airdrop process. The bot allows 
 4. Go to the "Network" tab, then click on "Fetch/XHR".
 5. Look for requests with names like `name`, `info`, or `tap`. Click on them to inspect.
 6. Find the token in the "Authorization" header of the request.
-7. Copy the token and save it in a file named `privateKeys.json` in the root directory of your project. The file should be formatted as follows:
+7. Copy the token and save it in a file named `tokens.json` in the root directory of your project. The file should be formatted as follows:
 
     ```json
     ["your_token_here"]

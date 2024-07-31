@@ -5,7 +5,7 @@ const cron = require('node-cron');
 const { displayHeader } = require('./src/utils');
 const { runBot } = require('./src/bot');
 
-const PRIVATE_KEYS = JSON.parse(fs.readFileSync('privateKeys.json', 'utf-8'));
+const TOKENS = JSON.parse(fs.readFileSync('tokens.json', 'utf-8'));
 
 (async () => {
   displayHeader();
@@ -16,21 +16,21 @@ const PRIVATE_KEYS = JSON.parse(fs.readFileSync('privateKeys.json', 'utf-8'));
     'Pick mode (0 for one-time, 1 for 24-hour): '
   );
 
-  for (const PRIVATE_KEY of PRIVATE_KEYS) {
+  for (const TOKEN of TOKENS) {
     if (mode === '1') {
       console.log(`Running bot immediately...`.blue);
-      await runBot(PRIVATE_KEY, 0, true);
+      await runBot(TOKEN, 0, true);
 
       console.log(`Bot is set to run every 24 hours.`.blue);
       cron.schedule('0 0 * * *', async () => {
-        await runBot(PRIVATE_KEY, 0, true);
+        await runBot(TOKEN, 0, true);
       });
     } else {
       try {
         const amount = readlineSync.question(
           'How many taps do you want to perform? '
         );
-        await runBot(PRIVATE_KEY, amount);
+        await runBot(TOKEN, amount);
       } catch (error) {
         console.error(`Error in IIFE: ${error.message}`.red);
       }

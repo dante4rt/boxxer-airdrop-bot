@@ -50,7 +50,7 @@ async function doTapTap(token, amount) {
       });
 
       console.log(`Success tap for ${i + 1} time(s)!`.green);
-      await delay(Math.floor(Math.random() * 1000) + 2);
+      await delay(Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000); // 5 - 10 secs
     } catch (error) {
       console.error(`Error in doTapTap: ${error.message}`.red);
     }
