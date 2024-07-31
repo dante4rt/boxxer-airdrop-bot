@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Node.js bot for automating the Boxxer Airdrop process. The bot allows you to perform airdrop actions either once or on a daily schedule using cron.
+This is a Node.js bot for automating the Boxxer Airdrop process. The bot allows you to perform airdrop actions either once or on a daily schedule using cron. It also supports multiple accounts by adding multiple tokens to the `tokens.json` file.
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ This is a Node.js bot for automating the Boxxer Airdrop process. The bot allows 
 7. Copy the token and save it in a file named `tokens.json` in the root directory of your project. The file should be formatted as follows:
 
     ```json
-    ["your_token_here"]
+    ["your_token_here", "another_token_here"]
     ```
 
 ### Running the Bot
