@@ -19,6 +19,7 @@ const TOKENS = JSON.parse(fs.readFileSync('tokens.json', 'utf-8'));
   for (const TOKEN of TOKENS) {
     if (mode === '1') {
       console.log(`Running bot immediately...`.blue);
+      console.log('');
       await runBot(TOKEN, 0, true);
 
       console.log(`Bot is set to run every 24 hours.`.blue);
@@ -30,6 +31,7 @@ const TOKENS = JSON.parse(fs.readFileSync('tokens.json', 'utf-8'));
         const amount = readlineSync.question(
           'How many taps do you want to perform? '
         );
+        console.log('');
         await runBot(TOKEN, amount);
       } catch (error) {
         console.error(`Error in IIFE: ${error.message}`.red);
