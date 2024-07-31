@@ -7,6 +7,8 @@ const { runBot } = require('./src/bot');
 
 const TOKENS = JSON.parse(fs.readFileSync('tokens.json', 'utf-8'));
 
+const DEFAULT_AMOUNT = 44;
+
 (async () => {
   displayHeader();
   console.log(`Please wait...`.yellow);
@@ -16,22 +18,25 @@ const TOKENS = JSON.parse(fs.readFileSync('tokens.json', 'utf-8'));
     'Pick mode (0 for one-time, 1 for 24-hour): '
   );
 
+  const amount =
+    mode === '1'
+      ? DEFAULT_AMOUNT
+      : parseInt(
+          readlineSync.question('How many taps do you want to perform? '),
+          10
+        );
+
   for (const TOKEN of TOKENS) {
     if (mode === '1') {
       console.log(`Running bot immediately...`.blue);
-      console.log('');
-      await runBot(TOKEN, 0, true);
+      await runBot(TOKEN, amount, true);
 
       console.log(`Bot is set to run every 24 hours.`.blue);
       cron.schedule('0 0 * * *', async () => {
-        await runBot(TOKEN, 0, true);
+        await runBot(TOKEN, amount, true);
       });
     } else {
       try {
-        const amount = readlineSync.question(
-          'How many taps do you want to perform? '
-        );
-        console.log('');
         await runBot(TOKEN, amount);
       } catch (error) {
         console.error(`Error in IIFE: ${error.message}`.red);

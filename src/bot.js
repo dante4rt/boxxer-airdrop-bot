@@ -23,6 +23,7 @@ async function runBot(PRIVATE_KEY, amount, isCron = false) {
 
     if (amount > profile.boxxer.tap.todayLeft) {
       console.log(`You can't do more than your available taps!`.red);
+      console.log('');
     } else {
       const response = await doTapTap(PRIVATE_KEY, amount);
       if (response !== undefined) {

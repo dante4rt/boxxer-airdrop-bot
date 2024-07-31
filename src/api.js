@@ -37,22 +37,36 @@ async function getData(token) {
   }
 }
 
-async function doTapTap(token, amount) {
-  for (let i = 0; i < amount; i++) {
-    try {
-      const { data } = await axios({
-        url: 'https://api.boxxer.world/boxxer/tap',
-        method: 'POST',
-        headers: { ...HEADERS, Authorization: token },
-        data: {
-          tapNumber: i + 1,
-        },
-      });
+async function doTapTap(token, totalTaps) {
+  let remainingTaps = totalTaps;
+  let tapsPerformed = 0;
 
-      console.log(`Success tap for ${i + 1} time(s)!`.green);
-      await delay(Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000); // 5 - 10 secs
-    } catch (error) {
-      console.error(`Error in doTapTap: ${error.message}`.red);
+  while (remainingTaps > 0 && tapsPerformed < 1000) {
+    const tapCount = Math.min(remainingTaps, 1000 - tapsPerformed);
+    for (let i = 0; i < tapCount; i++) {
+      try {
+        await axios({
+          url: 'https://api.boxxer.world/boxxer/tap',
+          method: 'POST',
+          headers: { ...HEADERS, Authorization: token },
+          data: {
+            tapNumber: tapsPerformed + i + 1,
+          },
+        });
+
+        console.log(`Success tap for ${tapsPerformed + i + 1} time(s)!`.green);
+        await delay(Math.floor(Math.random() * (15000 - 5000)) + 5000);
+      } catch (error) {
+        console.error(`Error in doTapTap: ${error.message}`.red);
+      }
+    }
+
+    tapsPerformed += tapCount;
+    remainingTaps -= tapCount;
+
+    if (remainingTaps > 0) {
+      console.log(`Pausing before the next batch...`.yellow);
+      await delay(Math.floor(Math.random() * (30000 - 10000)) + 10000); // Pause for 10-30 seconds
     }
   }
 
