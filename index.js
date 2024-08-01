@@ -29,11 +29,11 @@ const DEFAULT_AMOUNT = 44;
   for (const TOKEN of TOKENS) {
     if (mode === '1') {
       console.log(`Running bot immediately...`.blue);
-      await runBot(TOKEN, amount, true);
+      await runBot(TOKEN, amount);
 
       console.log(`Bot is set to run every 24 hours.`.blue);
       cron.schedule('0 0 * * *', async () => {
-        await runBot(TOKEN, amount, true);
+        await runBot(TOKEN, amount);
       });
     } else {
       try {

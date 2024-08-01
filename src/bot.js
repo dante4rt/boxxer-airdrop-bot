@@ -1,6 +1,6 @@
 const { getData, doTapTap } = require('./api');
 
-async function runBot(PRIVATE_KEY, amount, isCron = false) {
+async function runBot(PRIVATE_KEY, amount) {
   try {
     const profile = await getData(PRIVATE_KEY);
     console.log(
@@ -16,10 +16,6 @@ async function runBot(PRIVATE_KEY, amount, isCron = false) {
     console.log(`Total Times: ${profile.boxxer.tap.totalTimes}`.yellow);
     console.log(`Box Per Tap: ${profile.boxxer.tap.boxPerTap}`.yellow);
     console.log('');
-
-    if (isCron) {
-      amount = profile.boxxer.tap.todayLeft;
-    }
 
     if (amount > profile.boxxer.tap.todayLeft) {
       console.log(`You can't do more than your available taps!`.red);
