@@ -1,8 +1,9 @@
 const { getData, doTapTap } = require('./api');
+const { calculateAmount } = require('./utils');
 
-async function runBot(PRIVATE_KEY, amount) {
+async function runBot(token, amount, isCron = false) {
   try {
-    const profile = await getData(PRIVATE_KEY);
+    const profile = await getData(token);
     console.log(
       `Hello ${profile.user.firstName} ${profile.user.lastName}, welcome to Happy Cuan Bot!`
         .yellow
@@ -17,11 +18,14 @@ async function runBot(PRIVATE_KEY, amount) {
     console.log(`Box Per Tap: ${profile.boxxer.tap.boxPerTap}`.yellow);
     console.log('');
 
+    if (isCron) {
+      amount = calculateAmount(profile.boxxer.tap.todayLeft);
+    }
+
     if (amount > profile.boxxer.tap.todayLeft) {
       console.log(`You can't do more than your available taps!`.red);
-      console.log('');
     } else {
-      const response = await doTapTap(PRIVATE_KEY, amount);
+      const response = await doTapTap(token, amount);
       if (response !== undefined) {
         console.log(`All processes have been completed!`.green);
         console.log('');

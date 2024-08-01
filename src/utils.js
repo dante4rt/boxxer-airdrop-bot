@@ -12,4 +12,16 @@ function displayHeader() {
   console.log();
 }
 
-module.exports = { delay, displayHeader };
+function calculateAmount(todayLeft) {
+  let amount = 0;
+  let taps = 0;
+
+  while (amount + taps + 1 <= todayLeft) {
+    taps++;
+    amount += taps;
+  }
+
+  return taps;
+}
+
+module.exports = { delay, displayHeader, calculateAmount };
